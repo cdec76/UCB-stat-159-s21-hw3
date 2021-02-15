@@ -1,7 +1,8 @@
 """
 Chi-Square for two samples.
 
-Three functions.
+Three functions with different methods.
+chisq_1 uses list comprehension, chisq_2 uses array, and chisq_3 uses loop.
 """
 
 
@@ -42,8 +43,12 @@ def chisq_2(x, y):
     Calculate a Chi-Square for two samples.
 
     Keyword arguments:
-    x -- list sample 1
-    y -- list sample 2
+    x:  list sample 1
+    y:  list sample 2
+
+    Returns
+    chi_s:  float
+            value of Chi-Square result
     """
     n, m = len(x), len(y)
     z = np.append(x, y)
@@ -60,8 +65,12 @@ def chisq_3(x, y):
     Calculate a Chi-Square for two samples.
 
     Keyword arguments:
-    x -- list sample 1
-    y -- list sample 2
+    x:  list sample 1
+    y:  list sample 2
+
+    Returns
+    chi_s:  float
+            value of Chi-Square result
     """
     n, m = len(x), len(y)
     z = x + y
@@ -103,6 +112,8 @@ sample_y = [randint(1, 6) for i in range(10000)]
 coin_x = [randint(0, 1) for i in range(1000)]
 coin_y = [randint(0, 1) for i in range(100)]
 
+simple_x = [1, 1, 1]
+simple_y = [1, 1, 0]
 
 # %timeit -n 20 chisq_1(sample_x, sample_y)
 # %timeit -n 20 chisq_2(sample_x, sample_y)
@@ -121,14 +132,44 @@ inside for saving some time. The chisq_3 does not use any functions from other
 packages it uses all for loop for computing needed results. Among all three
 functions, it is the hardest to read, since using all for loops people need to
 check each loop to understand.
+Overall the first method takes the most time with twice as much as second
+method and four time as that of the third. However the first one is the easiest
+to read while the third one take a while to read.
 """
+
+
+def test_simple_1():
+    """
+    Test chisq_1 with a simple test.
+
+    Testing chisq_1 by using x = [1, 1, 1], y = [1, 0, 0]
+    """
+    assert chisq_1(simple_x, simple_y) == 0.6
+
+
+def test_simple_2():
+    """
+    Test chisq_2 with a simple test.
+
+    Testing chisq_2 by using x = [1, 1, 1], y = [1, 0, 0]
+    """
+    assert chisq_2(simple_x, simple_y) == 0.6
+
+
+def test_simple_3():
+    """
+    Test chisq_3 with a simple test.
+
+    Testing chisq_3 by using x = [1, 1, 1], y = [1, 0, 0]
+    """
+    assert chisq_3(simple_x, simple_y) == 0.6
 
 
 def test_method_1():
     """
     Test chisq_1.
 
-    Testing chisq_1 by using first samples
+    Testing chisq_1 by using random samples but fixed seed
     """
     assert round(chisq_1(sample_x, sample_y), 5) == 0.36701
 
@@ -137,7 +178,7 @@ def test_method_2():
     """
     Test chisq_2.
 
-    Testing chisq_2 by using first samples
+    Testing chisq_2 by using random samples but fixed seed
     """
     assert round(chisq_2(sample_x, sample_y), 5) == 0.36701
 
@@ -146,7 +187,7 @@ def test_method_3():
     """
     Test chisq_3.
 
-    Testing chisq_3 by using first samples
+    Testing chisq_3 by using random samples but fixed seed
     """
     assert round(chisq_3(sample_x, sample_y), 5) == 0.36701
 
@@ -155,7 +196,7 @@ def test_fixed_1():
     """
     Test chisq_1.
 
-    Testing chisq_1 by using first fixed samples
+    Testing chisq_1 by using fixed samples
     """
     assert round(chisq_1(fixtest_x, fixtest_y), 5) == 1.43
 
@@ -164,7 +205,7 @@ def test_fixed_2():
     """
     Test chisq_2.
 
-    Testing chisq_2 by using first fixed samples
+    Testing chisq_2 by using fixed samples
     """
     assert round(chisq_2(fixtest_x, fixtest_y), 5) == 1.43
 
@@ -173,6 +214,6 @@ def test_fixed_3():
     """
     Test chisq_3.
 
-    Testing chisq_3 by using first fixed samples
+    Testing chisq_3 by using fixed samples
     """
     assert round(chisq_3(fixtest_x, fixtest_y), 5) == 1.43
